@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --color-button: #011a2e;
+  --color-button-hover: #121063;
+
+  --color-main-color: #212121;
+  --color-message-bubble: #78dcca;
+
+  --color-sidebar: #181818;
+  --color-sidebar-selected-chat: #232323;
+  --color-sidebar-hover-chat: #202020;
+
+  --color-text-primary: #e0e0e0;
+  --color-text-secondary: #a0a0a0;
+
+  --color-action-menu-bg: #353535;
+  --color-action-menu-hover-bg: #494949;
+}
+
+
+/* Chrome, Edge, Safari */
+.scrollbar-hide::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-hide::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-hide::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+}
+.scrollbar-hide:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.7); /* gray-400 */
+}
+
+/* Firefox */
+.scrollbar-hide {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.scrollbar-hide:hover {
+  scrollbar-color: rgba(156, 163, 175, 0.7) transparent;
+}
