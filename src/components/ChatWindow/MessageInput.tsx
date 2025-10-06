@@ -56,7 +56,7 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="p-2 mb-2 w-[740px] bg-input-bg rounded-3xl flex">
+    <div className="p-2  w-[740px] bg-input-bg rounded-3xl flex">
       <div className="flex items-end-safe w-full  gap-2">
         {/* Plus Button */}
         <button

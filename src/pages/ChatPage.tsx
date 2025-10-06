@@ -7,6 +7,7 @@ import { IoMdMore } from "react-icons/io";
 import { LuPencil } from "react-icons/lu";
 import { BsArchive } from "react-icons/bs";
 import { FaRegTrashCan } from "react-icons/fa6";
+import MessageInput from "../components/ChatWindow/MessageInput";
 
 interface Chat {
   id: number;
@@ -92,7 +93,7 @@ const ChatPage = () => {
         </div>
 
         {/* ChatWindow */}
-        <div className="flex items-end justify-center overflow-y-auto bg-main-color scrollbar-hide h-screen py-2">
+        <div className="flex  justify-center   scrollbar-hide h-screen">
           <ChatWindow />
         </div>
       </div>
