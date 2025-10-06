@@ -2,7 +2,7 @@
 
 @theme {
   --color-button: #011a2e;
-  --color-button-hover: #121063;
+  --color-button-hover: #373737;
 
   --color-main-color: #212121;
   --color-message-bubble: #78dcca;
@@ -16,6 +16,11 @@
 
   --color-action-menu-bg: #353535;
   --color-action-menu-hover-bg: #494949;
+
+  --color-input-bg: #303030;
+  --color-input-send-button: #0169cc;
+  --color-input-send-button-disable: #094884;
+
 }
 
 

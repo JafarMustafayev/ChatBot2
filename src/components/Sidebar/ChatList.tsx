@@ -1,5 +1,10 @@
-import { IoMdMore } from "react-icons/io";
 import { useState, useEffect } from "react";
+
+import { IoMdMore } from "react-icons/io";
+import { LuPencil } from "react-icons/lu";
+import { BsArchive } from "react-icons/bs";
+import { FaRegTrashCan } from "react-icons/fa6";
+import { TfiExport } from "react-icons/tfi";
 
 interface Chat {
   id: number;
@@ -77,16 +82,28 @@ const ChatList = () => {
               </button>
 
               {openMenu === chat.id && (
-                <div className="absolute right-2 top-10 bg-action-menu-bg border rounded-md shadow-lg w-32 z-10">
-                  <button className="w-full text-left px-3 py-2 text-sm hover:bg-action-menu-hover-bg">
-                    Delete
-                  </button>
-                  <button className="w-full text-left px-3 py-2 text-sm hover:bg-action-menu-hover-bg">
-                    Archive
-                  </button>
-                  <button className="w-full text-left px-3 py-2 text-sm hover:bg-action-menu-hover-bg">
-                    Mute
-                  </button>
+                <div className="absolute right-2 top-10 bg-action-menu-bg  rounded-md shadow-lg w-32 z-10">
+                  <div className="flex flex-col m-1 text-amber-50 text-sm  justify-center items-center">
+                    <button className="w-full p-2 text-left ro hover:bg-action-menu-hover-bg rounded-md flex items-center">
+                      <TfiExport className="inline mr-2" />
+                      Export
+                    </button>
+
+                    <button className="w-full p-2 text-left ro hover:bg-action-menu-hover-bg rounded-md flex items-center">
+                      <LuPencil className="inline mr-2" />
+                      Rename
+                    </button>
+
+                    <button className="w-full text-left p-2 hover:bg-action-menu-hover-bg rounded-md flex items-center">
+                      <BsArchive className="inline mr-2" />
+                      Archive
+                    </button>
+
+                    <button className="w-full text-red-400 text-left p-2 hover:bg-action-menu-hover-bg rounded-md flex items-center">
+                      <FaRegTrashCan className="inline mr-2" />
+                      Delete
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
