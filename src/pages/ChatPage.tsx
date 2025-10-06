@@ -7,7 +7,6 @@ import { IoMdMore } from "react-icons/io";
 import { LuPencil } from "react-icons/lu";
 import { BsArchive } from "react-icons/bs";
 import { FaRegTrashCan } from "react-icons/fa6";
-import MessageInput from "../components/ChatWindow/MessageInput";
 
 interface Chat {
   id: number;
@@ -43,21 +42,21 @@ const ChatPage = () => {
   const activeChat = chats.find((c) => c.id === activeChatId);
 
   return (
-    <div className="flex h-screen bg-main-color relative">
+    <div className="flex h-screen bg-main-color relative overflow-hidden">
       <div>
         <Sidebar />
       </div>
 
       {/* Sağ tərəf */}
-      <div className="flex-1 flex flex-col relative">
-        <div className="absolute top-0 right-0 flex p-4 z-10  items-center gap-2">
+      <div className="flex-1 flex flex-col relative min-w-0 overflow-hidden">
+        <div className="absolute top-0 right-0 flex p-4 z-10 items-center gap-2">
           <button className="mr-2 p-2 bg-transparent hover:bg-button-hover gap-1.5 text-white rounded-3xl flex items-center">
             <TfiExport size={14} />
-            <span className="text-sm">Export</span>
+            <span className="text-sm hidden sm:inline">Export</span>
           </button>
 
           {/* Menu açan düymə */}
-          <div className="relative  hover:bg-button-hover rounded-xl ">
+          <div className="relative hover:bg-button-hover rounded-xl">
             <button
               className="p-2 cursor-pointer"
               onClick={(e) => {
@@ -69,9 +68,9 @@ const ChatPage = () => {
             </button>
 
             {openMenu && activeChat && (
-              <div className="absolute right-0 top-8  bg-action-menu-bg border rounded-md shadow-lg w-40 z-10 ">
-                <div className="flex flex-col m-1 text-amber-50 text-sm  justify-center items-center">
-                  <div className="px-3 py-2  border-b mb-1">
+              <div className="absolute right-0 top-8 bg-action-menu-bg border rounded-md shadow-lg w-40 z-10">
+                <div className="flex flex-col m-1 text-amber-50 text-sm justify-center items-center">
+                  <div className="px-3 py-2 border-b mb-1">
                     {activeChat.name}
                   </div>
                   <button className="w-full p-2 text-left ro hover:bg-action-menu-hover-bg rounded-md flex items-center">
@@ -93,7 +92,7 @@ const ChatPage = () => {
         </div>
 
         {/* ChatWindow */}
-        <div className="flex  justify-center   scrollbar-hide h-screen">
+        <div className="flex justify-center scrollbar-hide h-screen overflow-hidden">
           <ChatWindow />
         </div>
       </div>

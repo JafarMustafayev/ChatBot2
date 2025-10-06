@@ -56,11 +56,11 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="p-2  w-[740px] bg-input-bg rounded-3xl flex">
-      <div className="flex items-end-safe w-full  gap-2">
+    <div className="p-2 w-full max-w-[740px] bg-input-bg rounded-3xl flex">
+      <div className="flex items-end-safe w-full gap-2">
         {/* Plus Button */}
         <button
-          className="text-white p-2 mb-1 rounded-full hover:bg-action-menu-hover-bg self-end relative"
+          className="text-white p-2 mb-1 rounded-full hover:bg-action-menu-hover-bg self-end relative flex-shrink-0"
           onClick={(e) => {
             e.stopPropagation();
             toggleMenu();
@@ -71,7 +71,7 @@ const MessageInput = () => {
 
         {/* Action Menu */}
         {openMenu && (
-          <div className="absolute mb-13 bg-action-menu-bg w-3xs rounded-md shadow-lg">
+          <div className="absolute mb-13 bg-action-menu-bg w-3xs rounded-md shadow-lg z-50">
             <div className="flex flex-col m-1 text-amber-50 text-sm justify-center items-center">
               <div
                 className={`w-full border-b-white border-2 border-transparent p-2 ${
@@ -119,7 +119,7 @@ const MessageInput = () => {
         {thinkMode && (
           <button
             onClick={() => setThinkMode(false)}
-            className="text-white p-2 rounded-full self-end transition-colors bg-input-send-button hover:bg-opacity-80 mb-1"
+            className="text-white p-2 rounded-full self-end transition-colors bg-input-send-button hover:bg-opacity-80 mb-1 flex-shrink-0"
             title="Turn off thinking mode"
           >
             <FaRegLightbulb size={20} />
@@ -128,7 +128,7 @@ const MessageInput = () => {
 
         {/* Textarea - thinking mode aktiv olduqda genişlənir və yuxarı qalxır */}
         <div
-          className={`flex-1 transition-all duration-200 ${
+          className={`flex-1 min-w-0 transition-all duration-200 ${
             !thinkMode ? "" : "mb-[50px]"
           }`}
         >
@@ -138,7 +138,7 @@ const MessageInput = () => {
             onKeyDown={handleKeyDown}
             value={message}
             rows={1}
-            className="bg-input-bg resize-none outline-none border-none text-white placeholder:text-gray-400 w-full max-h-[360px]  overflow-y-auto p-2 leading-6 align-text-top z-20"
+            className="bg-input-bg resize-none outline-none border-none text-white placeholder:text-gray-400 w-full max-h-[360px] overflow-y-auto p-2 leading-6 align-text-top z-20"
             placeholder="Type your message here..."
           />
         </div>
@@ -147,7 +147,7 @@ const MessageInput = () => {
         <button
           onClick={handleSend}
           disabled={!message.trim()}
-          className={`text-white p-2 rounded-full items-self-end transition-colors ${
+          className={`text-white p-2 rounded-full items-self-end transition-colors flex-shrink-0 ${
             message.trim()
               ? "bg-input-send-button"
               : "bg-input-send-button-disable cursor-not-allowed opacity-80"
