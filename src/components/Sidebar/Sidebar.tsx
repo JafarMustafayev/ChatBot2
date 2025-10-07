@@ -8,12 +8,24 @@ import ChatList from "./ChatList";
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const [sidebarMenu, setSidebarMenu] = useState(false);
+  const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/i.test(
+    navigator.userAgent
+  );
+  useEffect(() => {
+    if (isMobileDevice) {
+      setOpen(false);
+      setSidebarMenu(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (open) {
-      setTimeout(() => {
-        setSidebarMenu(open);
-      }, 150);
+      setTimeout(
+        () => {
+          setSidebarMenu(open);
+        },
+        isMobileDevice ? 0 : 100
+      );
     } else {
       setSidebarMenu(open);
     }
@@ -42,7 +54,7 @@ const Sidebar = () => {
         <div className="flex-1 flex flex-col mx-1 mt-4 overflow-y-auto scrollbar-hide">
           <nav className="flex flex-col gap-1">
             <a
-              href="#"
+              href="/"
               className={`p-3 hover:bg-gray-700 rounded-xl gap-1.5 ${
                 sidebarMenu ? "flex items-center" : "justify-center"
               }`}
@@ -60,7 +72,7 @@ const Sidebar = () => {
               {sidebarMenu && <span className="text-sm">Search</span>}
             </a>
             <a
-              href="#"
+              href="/images"
               className={`p-3 hover:bg-gray-700 rounded-xl gap-1.5 ${
                 sidebarMenu ? "flex items-center" : "justify-center"
               }`}
@@ -71,7 +83,6 @@ const Sidebar = () => {
           </nav>
 
           {/* Chat list scrollable olacaq */}
-
           <div
             className={`mt-4 flex-1 overflow-y-auto scrollbar-hide ${
               sidebarMenu ? "block" : "hidden"
