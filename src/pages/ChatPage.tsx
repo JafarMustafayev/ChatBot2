@@ -49,7 +49,7 @@ const ChatPage = () => {
 
       {/* Sağ tərəf */}
       <div className="flex-1 flex flex-col relative min-w-0 overflow-hidden">
-        <div className="absolute top-0 right-0 flex p-4 z-10 items-center gap-2">
+        <div className=" top-0 right-0  p-4 z-10  gap-2 flex xl:absolute justify-end">
           <button className="mr-2 p-2 bg-transparent hover:bg-button-hover gap-1.5 text-white rounded-3xl flex items-center">
             <TfiExport size={14} />
             <span className="text-sm hidden sm:inline">Export</span>

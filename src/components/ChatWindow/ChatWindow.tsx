@@ -5,11 +5,11 @@ const ChatWindow = () => {
   return (
     <div className="w-full flex justify-center overflow-x-hidden">
       {/* Chat mesajları buraya gələcək */}
-      <div className="flex flex-col gap-2 py-3.5 w-full max-w-[740px] min-w-0 justify-between h-screen px-4 sm:px-0">
-        <div className="flex flex-col gap-2 overflow-y-auto scrollbar-hide">
+      <div className="flex flex-col gap-2 py-3.5 w-full max-w-[740px] min-w-0 px-4 sm:px-0">
+        <div className="flex flex-col gap-2">
           <MessageWindow />
         </div>
-        <div className="flex justify-center items-center w-full">
+        <div className="flex justify-center items-center w-full sticky bottom-0 bg-main-color pb-2 rounded-t-3xl">
           <MessageInput />
         </div>
       </div>
