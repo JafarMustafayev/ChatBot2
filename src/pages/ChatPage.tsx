@@ -42,14 +42,10 @@ const ChatPage = () => {
   const activeChat = chats.find((c) => c.id === activeChatId);
 
   return (
-    <div className="flex h-screen bg-main-color relative overflow-hidden">
-      <div>
-        <Sidebar />
-      </div>
-
+    <>
       {/* Sağ tərəf */}
       <div className="flex-1 flex flex-col relative min-w-0 overflow-hidden">
-        <div className=" top-0 right-0  p-4 z-10  gap-2 flex xl:absolute justify-end">
+        <div className=" top-0 right-0  p-4 z-10  gap-2 flex xl: justify-end">
           <button className="mr-2 p-2 bg-transparent hover:bg-button-hover gap-1.5 text-white rounded-3xl flex items-center">
             <TfiExport size={14} />
             <span className="text-sm hidden sm:inline">Export</span>
@@ -96,7 +92,7 @@ const ChatPage = () => {
           <ChatWindow />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
