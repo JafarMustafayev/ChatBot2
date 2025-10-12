@@ -48,15 +48,20 @@ const MessageInput = () => {
     [adjustTextareaHeight]
   );
 
-  // Textarea enini yoxlayıb wide mode-u avtomatik idarə etmək
+  // Textarea enini və hündürlüyünü yoxlayıb wide mode-u avtomatik idarə etmək
   useEffect(() => {
     const span = spanRef.current;
     const container = containerRef.current;
+    const textarea = textareaRef.current;
 
-    if (!span || !container) return;
+    if (!span || !container || !textarea) return;
 
     // span-ın real enini ölçürük
     const spanWidth = span.getBoundingClientRect().width;
+
+    // Textarea-nın hündürlüyünü yoxlayırıq (çox sətirli olub-olmadığını anlamaq üçün)
+    const textareaHeight = textarea.scrollHeight;
+    const isMutiline = textareaHeight > TEXTAREA_CONFIG.DEFAULT_HEIGHT;
 
     // Parent konteyner enini ölçürük (düymələr çıxılmaqla)
     // İki düymə + gap-lər üçün təxminən 100px çıxırıq
@@ -64,8 +69,8 @@ const MessageInput = () => {
     const availableWidth = parentElement?.offsetWidth || 0;
     const maxWidthForNarrowMode = availableWidth - 120; // düymələr üçün yer
 
-    // Əgər mətn eni maksimum eni keçirsə və ya thinkMode aktivdirsə
-    if (spanWidth > maxWidthForNarrowMode || thinkMode) {
+    // Əgər mətn eni maksimum eni keçirsə, çox sətirli olarsa və ya thinkMode aktivdirsə
+    if (spanWidth > maxWidthForNarrowMode || isMutiline || thinkMode) {
       setWideInputMode(true);
     }
     // Əgər mesaj tamamilə silinib və thinkMode qapalıdırsa
