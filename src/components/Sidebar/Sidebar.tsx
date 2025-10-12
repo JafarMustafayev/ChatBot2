@@ -4,6 +4,7 @@ import { FiSidebar } from "react-icons/fi";
 import { FaSearch } from "react-icons/fa";
 import { BsImages } from "react-icons/bs";
 import ChatList from "./ChatList";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
@@ -53,33 +54,33 @@ const Sidebar = () => {
         {/* Main Scrollable Area */}
         <div className="flex-1 flex flex-col mx-1 mt-4 overflow-y-auto scrollbar-hide">
           <nav className="flex flex-col gap-1">
-            <a
-              href="/"
+            <Link
+              to="/"
               className={`p-3 hover:bg-gray-700 rounded-xl gap-1.5 ${
                 sidebarMenu ? "flex items-center" : "justify-center"
               }`}
             >
               <HiPencilSquare size={20} />
               {sidebarMenu && <span className="text-sm">New</span>}
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="#"
               className={`p-3 hover:bg-gray-700 rounded-xl gap-1.5 ${
                 sidebarMenu ? "flex items-center" : "justify-center"
               }`}
             >
               <FaSearch size={20} />
               {sidebarMenu && <span className="text-sm">Search</span>}
-            </a>
-            <a
-              href="/images"
+            </Link>
+            <Link
+              to="/images"
               className={`p-3 hover:bg-gray-700 rounded-xl gap-1.5 ${
                 sidebarMenu ? "flex items-center" : "justify-center"
               }`}
             >
               <BsImages size={20} />
               {sidebarMenu && <span className="text-sm">Library</span>}
-            </a>
+            </Link>
           </nav>
 
           {/* Chat list scrollable olacaq */}
