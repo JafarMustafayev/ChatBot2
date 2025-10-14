@@ -10,7 +10,11 @@ const TEXTAREA_CONFIG = {
   DEFAULT_HEIGHT: 40,
 } as const;
 
-const MessageInput = () => {
+interface MessageInputProps {
+  onSendMessage?: (message: string, thinkMode: boolean) => void;
+}
+
+const MessageInput = ({ onSendMessage }: MessageInputProps) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -117,8 +121,12 @@ const MessageInput = () => {
     const trimmedMessage = message.trim();
     if (!trimmedMessage) return;
 
-    // Burada mesajı göndərən funksiya çağırılacaq
-    console.log("Göndərildi:", trimmedMessage);
+    // Parent komponente mesaj göndər
+    if (onSendMessage) {
+      onSendMessage(trimmedMessage, thinkMode);
+    }
+
+    console.log("Göndərildi:", trimmedMessage, "Think Mode:", thinkMode);
 
     // Input-u təmizlə
     setMessage("");
@@ -126,7 +134,7 @@ const MessageInput = () => {
       textareaRef.current.value = "";
       textareaRef.current.style.height = `${TEXTAREA_CONFIG.DEFAULT_HEIGHT}px`;
     }
-  }, [message]);
+  }, [message, thinkMode, onSendMessage]);
 
   // Enter ilə göndərmə
   const handleKeyDown = useCallback(
@@ -163,6 +171,7 @@ const MessageInput = () => {
               onInput={handleInput}
               onKeyDown={handleKeyDown}
               value={message}
+              typeof="text"
               rows={1}
               className="resize-none outline-none border-none bg-transparent text-white placeholder:text-gray-400 max-h-[380px] overflow-y-auto p-2 leading-6 w-full"
               placeholder="Mesajınızı bura yazın..."
