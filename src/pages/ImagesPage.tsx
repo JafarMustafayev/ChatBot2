@@ -1,130 +1,98 @@
 import { useState, useEffect, useCallback } from "react";
 import { RiDownload2Line } from "react-icons/ri";
 import { IoChatbubbleOutline, IoClose } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
-const ImagesPage = () => {
-  const images = [
+interface ImageType {
+  id: number;
+  url: string;
+  name: string;
+  conversationId: string;
+  messageId: string;
+}
+
+const ImagesPage: React.FC = () => {
+  const images: ImageType[] = [
     {
       id: 1,
       url: "/src/assets/tempImages/3b4832dd-38f7-4bcf-a0eb-e45d2ff454e6.jpg",
       name: "Mountain Sunset",
-      chatId: 1,
+      conversationId: "1",
+      messageId: "1",
     },
     {
       id: 2,
       url: "/src/assets/tempImages/688af05d-7647-473b-9b7d-d651044263f1.JPG",
       name: "Forest Path",
-    },
-
-    {
-      id: 3,
-      url: "/src/assets/tempImages/64678860-f151-4c68-95d2-113566272c44.jpg",
-      name: "Nature Trail",
-    },
-    {
-      id: 4,
-      url: "/src/assets/tempImages/a599453e-f115-41d6-b8e8-3bbc70fdea93.jpg",
-      name: "Foggy Lake",
-    },
-    {
-      id: 5,
-      url: "/src/assets/tempImages/ayyappa-vardhan-h1Gzq-MJk74-unsplash.jpg",
-      name: "Flower Field",
-    },
-    {
-      id: 6,
-      url: "/src/assets/tempImages/benjamin-voros-U-Kty6HjxcQc-unsplash.jpg",
-      name: "Desert Landscape",
-    },
-    {
-      id: 7,
-      url: "/src/assets/tempImages/bf79e3d7-a58e-4361-ba2a-b9a32f32cd60.jpg",
-      name: "City Skyline",
-    },
-    {
-      id: 8,
-      url: "/src/assets/tempImages/felipe-simo-73k-11L0nVs-unsplash.jpg",
-      name: "Snowy Mountains",
-    },
-    {
-      id: 9,
-      url: "/src/assets/tempImages/jake-hills-z0gDv24X3uQ-unsplash.jpg",
-      name: "Ocean View",
-    },
-    {
-      id: 10,
-      url: "/src/assets/tempImages/lucas-andrade-emVglyWb9Y0-unsplash.jpg",
-      name: "Moon and Stars",
-    },
-    {
-      id: 11,
-      url: "/src/assets/tempImages/nat-riddle-fKheTfYikP0-unsplash.jpg",
-      name: "Moon",
-    },
-    {
-      id: 12,
-      url: "/src/assets/tempImages/silkwaywest.jpg",
-      name: "silk way west",
+      conversationId: "2",
+      messageId: "2",
     },
   ];
 
-  const [selectedImage, setSelectedImage] = useState<null | number>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
+    null
+  );
 
-  const handleClose = () => setSelectedImage(null);
+  const selectedImage =
+    selectedImageIndex !== null ? images[selectedImageIndex] : null;
 
-  // === Scroll və klaviatura ilə şəkil dəyişmə funksiyası ===
+  const handleClose = () => setSelectedImageIndex(null);
+
+  // Növbəti şəkilə keçid
   const handleNextImage = useCallback(() => {
-    setSelectedImage((prev) => {
+    setSelectedImageIndex((prev) => {
       if (prev === null) return null;
-      return prev < images.length ? prev + 1 : images.length;
+      return prev < images.length - 1 ? prev + 1 : prev;
     });
   }, [images.length]);
 
+  // Əvvəlki şəkilə keçid
   const handlePrevImage = useCallback(() => {
-    setSelectedImage((prev) => {
+    setSelectedImageIndex((prev) => {
       if (prev === null) return null;
-      return prev > 1 ? prev - 1 : 1;
+      return prev > 0 ? prev - 1 : prev;
     });
-  }, [images.length]);
+  }, []);
 
-  // Keyboard arrow listener
+  // Klaviatura ilə idarəetmə
   useEffect(() => {
-    if (selectedImage === null) return;
+    if (selectedImageIndex === null) return;
 
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowUp") handlePrevImage();
       if (e.key === "ArrowDown") handleNextImage();
-      if (e.key === "Escape") handleClose(); // ESC ilə bağlamaq
+      if (e.key === "Escape") handleClose();
     };
 
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [selectedImage, handleNextImage, handlePrevImage]);
+  }, [selectedImageIndex, handleNextImage, handlePrevImage]);
 
-  // Scroll listener
+  // Scroll ilə idarəetmə
   useEffect(() => {
-    if (selectedImage === null) return;
+    if (selectedImageIndex === null) return;
 
-    let scrollTimeout: number | null = null;
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const handleScroll = (e: WheelEvent) => {
-      e.preventDefault(); // səhifə sürüşməsin
+      e.preventDefault();
       if (scrollTimeout) clearTimeout(scrollTimeout);
 
       scrollTimeout = setTimeout(() => {
         if (e.deltaY > 0) handleNextImage();
         else if (e.deltaY < 0) handlePrevImage();
-      }, 50); // sürətli scroll-larda çox keçid olmasın
+      }, 80);
     };
 
     window.addEventListener("wheel", handleScroll, { passive: false });
     return () => window.removeEventListener("wheel", handleScroll);
-  }, [selectedImage, handleNextImage, handlePrevImage]);
+  }, [selectedImageIndex, handleNextImage, handlePrevImage]);
 
-  const downloadImage = (url: string, name: string) => {
+  // Şəkil yükləmə funksiyası
+  const downloadImage = (image: ImageType) => {
     const link = document.createElement("a");
-    link.href = url;
-    link.download = name;
+    link.href = image.url;
+    link.download = image.name;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -132,24 +100,24 @@ const ImagesPage = () => {
 
   return (
     <div className="h-full w-full flex flex-col overflow-y-auto overflow-x-hidden">
-      <div className="p-4 w-full border-b border-gray-300 text-2xl font-semibold">
+      <div className="p-4 w-full border-b text-white border-gray-300 text-2xl font-semibold">
         Library
       </div>
 
-      {/* Şəkil qrid hissəsi */}
+      {/* Şəkil grid hissəsi */}
       <div className="grid min-h-60 w-full grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 overflow-x-hidden overflow-y-auto scrollbar-hide p-2">
-        {images.map((img) => (
+        {images.map((img, index) => (
           <img
             key={img.id}
             src={img.url}
             alt={img.name}
-            onClick={() => setSelectedImage(img.id)}
+            onClick={() => setSelectedImageIndex(index)}
             className="w-64 h-64 object-cover rounded-sm cursor-pointer hover:opacity-80 transition"
           />
         ))}
       </div>
 
-      {/* Modal (tam ekran şəkil baxış pəncərəsi) */}
+      {/* Modal (tam ekran baxış) */}
       {selectedImage && (
         <div className="fixed inset-0 bg-black/90 flex flex-col z-50">
           {/* Header */}
@@ -161,26 +129,22 @@ const ImagesPage = () => {
               >
                 <IoClose size={21} />
               </button>
-              <span className="font-medium text-lg">
-                {images.find((img) => img.id === selectedImage)?.name}
-              </span>
+              <span className="font-medium text-lg">{selectedImage.name}</span>
             </div>
 
             <div className="flex items-center gap-3">
               <button
                 className="p-2 hover:bg-white/20 rounded-lg transition"
-                onClick={() =>
-                  downloadImage(
-                    images.find((img) => img.id === selectedImage)!.url,
-                    images.find((img) => img.id === selectedImage)!.name
-                  )
-                }
+                onClick={() => downloadImage(selectedImage)}
               >
                 <RiDownload2Line size={21} />
               </button>
-              <button className="p-2 hover:bg-white/20 rounded-lg transition">
+              <Link
+                to={`chat/${selectedImage.conversationId}`}
+                className="p-2 hover:bg-white/20 rounded-lg transition"
+              >
                 <IoChatbubbleOutline size={21} />
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -189,23 +153,23 @@ const ImagesPage = () => {
             {/* Əsas şəkil */}
             <div className="flex-1 flex items-center justify-center">
               <img
-                src={images.find((img) => img.id === selectedImage)?.url}
-                alt="Selected"
+                src={selectedImage.url}
+                alt={selectedImage.name}
                 className="max-h-[85vh] max-w-[90%] object-contain rounded-lg shadow-lg transition-all duration-300"
               />
             </div>
 
-            {/* Sağdakı kiçik şəkillər */}
-            <div className="w-24  flex flex-col justify-center gap-2 overflow-y-auto scrollbar-hide  ">
-              {images.map((img) => (
+            {/* Sağdakı thumbnail-lər */}
+            <div className="w-24 flex flex-col justify-center gap-2 overflow-y-auto scrollbar-hide">
+              {images.map((img, index) => (
                 <img
                   key={img.id}
                   src={img.url}
                   alt={img.name}
-                  onClick={() => setSelectedImage(img.id)}
+                  onClick={() => setSelectedImageIndex(index)}
                   className={`w-full h-24 object-cover rounded-lg cursor-pointer transition border ${
-                    img.id === selectedImage
-                      ? "border-message-bubble border-3 justify-center-safe"
+                    index === selectedImageIndex
+                      ? "border-message-bubble border-3"
                       : "border-transparent border-2 hover:border-message-bubble/50 hover:opacity-80"
                   }`}
                 />
