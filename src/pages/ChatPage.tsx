@@ -1,4 +1,3 @@
-import Sidebar from "../components/Sidebar/Sidebar";
 import ChatWindow from "../components/ChatWindow/ChatWindow";
 import { useState, useEffect } from "react";
 

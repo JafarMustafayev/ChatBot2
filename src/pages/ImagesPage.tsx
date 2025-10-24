@@ -11,7 +11,7 @@ interface ImageType {
   messageId: string;
 }
 
-const ImagesPage: React.FC = () => {
+const ImagesPage = () => {
   const images: ImageType[] = [
     {
       id: 1,

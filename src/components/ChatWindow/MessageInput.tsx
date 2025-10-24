@@ -21,14 +21,12 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
   const spanRef = useRef<HTMLSpanElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const [message, setMessage] = useState("");
+  const [prompt, setPrompt] = useState("");
   const [openMenu, setOpenMenu] = useState(false);
   const [thinkMode, setThinkMode] = useState(false);
   const [wideInputMode, setWideInputMode] = useState(false);
-
-  const isMobileDevice = useRef(
-    /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-  ).current;
+  //todo: mesaj state-ni yuxarı komponentə qaldırmaq olar
+  //todo: file upload funksionallığı əlavə etmək olar
 
   // Textarea hündürlüyünü dinamik olaraq tənzimləmək
   const adjustTextareaHeight = useCallback(() => {
@@ -46,7 +44,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
   // Input dəyişikliklərini idarə etmək
   const handleInput = useCallback(
     (e: React.FormEvent<HTMLTextAreaElement>) => {
-      setMessage(e.currentTarget.value);
+      setPrompt(e.currentTarget.value);
       adjustTextareaHeight();
     },
     [adjustTextareaHeight]
@@ -78,10 +76,10 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
       setWideInputMode(true);
     }
     // Əgər mesaj tamamilə silinib və thinkMode qapalıdırsa
-    else if (message.trim().length === 0 && !thinkMode) {
+    else if (prompt.trim().length === 0 && !thinkMode) {
       setWideInputMode(false);
     }
-  }, [message, thinkMode]);
+  }, [prompt, thinkMode]);
 
   // Menyu xaricində kliklə menyunu bağlamaq
   useEffect(() => {
@@ -118,7 +116,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
 
   // Mesajı göndərmək
   const handleSend = useCallback(() => {
-    const trimmedMessage = message.trim();
+    const trimmedMessage = prompt.trim();
     if (!trimmedMessage) return;
 
     // Parent komponente mesaj göndər
@@ -129,12 +127,12 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
     console.log("Göndərildi:", trimmedMessage, "Think Mode:", thinkMode);
 
     // Input-u təmizlə
-    setMessage("");
+    setPrompt("");
     if (textareaRef.current) {
       textareaRef.current.value = "";
       textareaRef.current.style.height = `${TEXTAREA_CONFIG.DEFAULT_HEIGHT}px`;
     }
-  }, [message, thinkMode, onSendMessage]);
+  }, [prompt, thinkMode, onSendMessage]);
 
   // Enter ilə göndərmə
   const handleKeyDown = useCallback(
@@ -148,7 +146,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
   );
 
   // Mesajın boş olub olmadığını yoxlamaq
-  const isMessageEmpty = !message.trim();
+  const isMessageEmpty = !prompt.trim();
 
   return (
     <div
@@ -170,7 +168,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
               ref={textareaRef}
               onInput={handleInput}
               onKeyDown={handleKeyDown}
-              value={message}
+              value={prompt}
               typeof="text"
               rows={1}
               className="resize-none outline-none border-none bg-transparent text-white placeholder:text-gray-400 max-h-[380px] overflow-y-auto p-2 leading-6 w-full"
@@ -180,14 +178,17 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
             {/* görünməyən span - eni hesablamaq üçün */}
             <span
               ref={spanRef}
-              className="invisible absolute whitespace-pre text-base p-2 leading-6 pointer-events-none"
+              className="  absolute whitespace-pre text-base leading-6 max-h-0  bg-amber-400 pointer-events-none"
               style={{
                 left: 0,
                 top: 0,
                 font: "inherit",
+                maxHeight: "0px",
+                overflow: "hidden",
+                visibility: "hidden",
               }}
             >
-              {message || " "}
+              {prompt || " "}
             </span>
           </div>
         </div>
