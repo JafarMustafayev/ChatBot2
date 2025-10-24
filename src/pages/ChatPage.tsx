@@ -1,11 +1,9 @@
 import ChatWindow from "../components/ChatWindow/ChatWindow";
 import { useState, useEffect } from "react";
 
-import { TfiExport } from "react-icons/tfi";
 import { IoMdMore } from "react-icons/io";
-import { LuPencil } from "react-icons/lu";
-import { BsArchive } from "react-icons/bs";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { TfiExport } from "react-icons/tfi";
+import { BsArchive, BsPencil, BsTrash3 } from "react-icons/bs";
 
 interface Chat {
   id: number;
@@ -69,7 +67,7 @@ const ChatPage = () => {
                     {activeChat.name}
                   </div>
                   <button className="w-full p-2 text-left ro hover:bg-action-menu-hover-bg rounded-md flex items-center">
-                    <LuPencil className="inline mr-2" />
+                    <BsPencil className="inline mr-2" />
                     Rename
                   </button>
                   <button className="w-full text-left p-2 hover:bg-action-menu-hover-bg rounded-md flex items-center">
@@ -77,7 +75,7 @@ const ChatPage = () => {
                     Archive
                   </button>
                   <button className="w-full text-red-400 text-left p-2 hover:bg-action-menu-hover-bg rounded-md flex items-center">
-                    <FaRegTrashCan className="inline mr-2" />
+                    <BsTrash3 className="inline mr-2" />
                     Delete
                   </button>
                 </div>
