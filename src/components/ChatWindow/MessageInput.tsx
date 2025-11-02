@@ -124,8 +124,6 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
       onSendMessage(trimmedMessage, thinkMode);
     }
 
-    console.log("Göndərildi:", trimmedMessage, "Think Mode:", thinkMode);
-
     // Input-u təmizlə
     setPrompt("");
     if (textareaRef.current) {
